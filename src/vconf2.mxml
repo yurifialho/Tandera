@@ -4,7 +4,7 @@
     xmlns:s="library://ns.adobe.com/flex/spark" 
 backgroundGradientColors="[#000000,#556B2F]" layout="absolute">
 
-    <fx:Script source="vconf2.java"/>
+    <fx:Script source="vconf2.as"/>
 
 <!-- Objetos de animação -->
 
@@ -39,7 +39,7 @@ backgroundGradientColors="[#000000,#556B2F]" layout="absolute">
 	<!-- LOGIN -->
 
 <fx:Declarations>
-	<mx:HTTPService id="loginService" url="http://10.100.9.250/vconf/login.php" method="POST" resultFormat="text" 
+	<mx:HTTPService id="loginService" url="http://10.100.52.43/vconf/login.php" method="POST" resultFormat="text" 
 		result="{handleLogin(event)}" fault="{handleFault(event)}">
 		<mx:request>
 			<username>{username.text}</username>
@@ -48,7 +48,7 @@ backgroundGradientColors="[#000000,#556B2F]" layout="absolute">
 	</mx:HTTPService>
 
 	<!-- LOGOUT -->	
-	<mx:HTTPService id="logoutService" url="http://10.100.9.250/vconf/logout.php" resultFormat="text" 
+	<mx:HTTPService id="logoutService" url="http://10.100.52.43/vconf/logout.php" resultFormat="text" 
 		result="{handleLogout(event)}" fault="{handleFault(event)}"/>
 
 </fx:Declarations>
@@ -64,7 +64,7 @@ backgroundGradientColors="[#000000,#556B2F]" layout="absolute">
 			<mx:TextInput id="username" width="80" borderStyle="solid" />
 			<mx:Label color = "#000000" text="Senha"/>
 			<mx:TextInput id="password" width="80" displayAsPassword="true" borderStyle="solid"
-				enter="{loginService.send()}" /> <!-- "{loginService.send()}" -->
+				enter="{loginService.send()}" />
 			<mx:Button label="Conectar" click="{loginService.send()}"/>
 		</mx:HBox>
 	</mx:Panel>
@@ -93,35 +93,12 @@ backgroundGradientColors="[#000000,#556B2F]" layout="absolute">
 	           left="7"
 	           top="40"
 	           width="160" enabled="{statusConnection}"/>
-	<!--
-	<mx:Button id="btParaVideo"
-	           label="Congelar meu vídeo"
-	           click="congelaVideo()"
-	           left="7"
-	           top="40"
-	           width="160" enabled="{statusConnection}"/>
-
-	<mx:Button id="btParaAudio"
-	           label="Desligar meu mic."
-	           click="congelaAudio()"
-	           left="7"
-	           top="40"
-	           width="160" enabled="{statusConnection}"/>
-
-	<mx:Button id="btVisualizar"
-	           label="Visualizar do servidor"
-	           click="visualizar()"
-	           left="7"
-	           top="40"
-	           width="160" enabled="{statusConnection}"/>
-	-->
 </mx:HBox>
 <mx:HBox>
 	<mx:VBox>
 		<mx:VBox width="216"
 				 height="170" 
 				 backgroundSize="100%"
-				 backgroundImage="no_signal.gif"
 				 backgroundColor="#000000"
 				 left="10"
 				 top="334">

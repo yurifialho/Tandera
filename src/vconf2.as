@@ -48,14 +48,20 @@ import flash.net.SharedObject;
      */
     private function init():void
     {
-	    	if ( nc == null )
-				{
-        	nc=new NetConnection();
-        	nc.addEventListener( NetStatusEvent.NET_STATUS, netStatus );
+				try {
+		    	if ( nc == null )
+					{
+	        	nc=new NetConnection();
+	        	nc.addEventListener( NetStatusEvent.NET_STATUS, netStatus );
+					}
+					//Endereço do servidor 
+	        nc.connect( "rtmp://10.100.52.43/fitcDemo" );
+	        nc.client=this;
 				}
-				//Endereço do servidor 
-        nc.connect( "rtmp://10.100.9.250/fitcDemo" );
-        nc.client=this;
+				catch(error:Error)
+				{
+					Alert.show("Erro");
+				}
      }
 
     /**
@@ -71,8 +77,11 @@ import flash.net.SharedObject;
      */
     private function netStatus( e:NetStatusEvent ):void
     {
+			try{
     	RED5Status.text=e.info.code;
       statusConnection=false
+			Alert.show(e.info.code.toString());
+			Alert.show(e.info.description.toString());
       switch ( e.info.code )
       {
       	case "NetConnection.Connect.Success":
@@ -88,6 +97,9 @@ import flash.net.SharedObject;
         case "NetConnection.Connect.Closed":   break;
         case "NetConnection.Connect.Rejected": break;
        }
+			} catch(error:Error) {
+				Alert.show('Erro1');
+			}
      }
 
 
@@ -306,7 +318,7 @@ import flash.net.SharedObject;
 		// we check if the user has access to any of the roles
 		private function handleLogin(event:ResultEvent):void {
 			userAccess = event.result as String;
-			trace("handleLogin result data = "+userAccess);
+			Alert.show(event.result.toString());	
 			
 			if (userAccess.indexOf(roles)>-1) {   //se userAccess for 'failed'
 				// show failed login message, show guest menu
@@ -412,13 +424,7 @@ import flash.net.SharedObject;
 		}
 		
 		private function handleFault(event:FaultEvent):void {
-			// for stream error 2032 see http://www.judahfrangipane.com/blog/?p=87
-			trace("fault = "+event.message);
-			//loginStack.selectedChild = loginForm;
-	//		errorText.visible = true;
-	//		errorText.text = "Could not connect to the server. Check the url. \nFault " + event.fault;
-			//linkBar.dataProvider = guestMenu;
-			//viewStack.selectedChild = viewStack.parentApplication[guestMenu[0]];
+			Alert.show(event.message.toString());
 		}
 		
 		public function handleStreamEvent(event:NetStatusEvent):void
