@@ -1,0 +1,213 @@
+<?xml version="1.0" ?>
+<!-- transitions/DefiningTrans.mxml -->
+<mx:Application xmlns:fx="http://ns.adobe.com/mxml/2009" 
+    xmlns:mx="library://ns.adobe.com/flex/mx" 
+    xmlns:s="library://ns.adobe.com/flex/spark" 
+backgroundGradientColors="[#000000,#556B2F]" layout="absolute">
+
+
+<!-- "MECÂNICA" DO SISTEMA -->	
+	<fx:Script source="vconf3.as"/>
+
+
+<!-- Objetos de animação -->
+
+	<mx:states>
+	        <mx:State name="default"/>
+	        <mx:State name="conectado"/>
+	</mx:states>
+
+<!-- Define Transition array with one Transition object.-->
+    <mx:transitions>
+        <!-- A transition for changing from any state to any state. -->
+        <mx:Transition id="myTransition" fromState="*" toState="*">
+            <!-- Define a Parallel effect as the top-level effect.-->
+            <mx:Parallel id="t1" targets="{[painelLogin,tela,chat]}">
+                <!-- Define a Move and Resize effect.-->
+                <s:Move  duration="1000"/>
+                <s:Resize duration="900"/>
+            </mx:Parallel>
+        </mx:Transition>
+    </mx:transitions>
+
+<!-- Objetos ds barra de título -->
+	<mx:Label id="titulo" x="10" y="10" text="10ª Região Militar - Sistema de video conferência" fontSize="18" fontWeight="bold" fontStyle="italic" color="#FFFF00"/>
+	<mx:HRule y="49" right="10" left="10"/>
+	<mx:Label id="loginFailedText" text="Login falhou!" fontWeight="bold" color="white" right="10" y="10" visible="false"/>
+	<mx:Label id="RED5Status" left="578" top="12" color="white" text="Aguardando conexão com o servidor" visible="false"/> 
+	
+	<!-- Requisição http (pede ao PHP para fazer a consulta no banco de dados)
+		Aqui o flex passa duas variáveis (username.text e password.text) ao PHP, que responde (result ou fault) 
+		e dependendo da resposta, um método diferente é chamado (handleLogin ou handleFault) -->
+
+	<!-- LOGIN -->
+
+<fx:Declarations>
+	<mx:HTTPService id="loginService" url="http://10.100.9.250/vconf/login.php" method="POST" resultFormat="text" 
+		result="{handleLogin(event)}" fault="{handleFault(event)}">
+		<mx:request>
+			<username>{username.text}</username>
+			<password>{password.text}</password>
+		</mx:request>
+	</mx:HTTPService>
+
+	<!-- LOGOUT -->	
+	<mx:HTTPService id="logoutService" url="http://10.100.9.250/vconf/logout.php" resultFormat="text" 
+		result="{handleLogout(event)}" fault="{handleFault(event)}">
+        </mx:HTTPService>
+
+</fx:Declarations>
+<mx:UIComponent id="video1" width="1" height="1"/>
+<mx:UIComponent id="video2" width="1" height="1"/>
+<mx:UIComponent id="video3" width="1" height="1"/>
+<mx:UIComponent id="video4" width="1" height="1"/>
+<mx:UIComponent id="video5" width="1" height="1"/>
+<mx:UIComponent id="video6" width="1" height="1"/>
+<mx:UIComponent id="video7" width="1" height="1"/>
+<mx:UIComponent id="video8" width="1" height="1"/>
+<mx:UIComponent id="video9" width="1" height="1"/>
+<mx:UIComponent id="video10" width="1" height="1"/>
+<mx:UIComponent id="video11" width="1" height="1"/>
+<mx:UIComponent id="video12" width="1" height="1"/>
+<mx:UIComponent id="video13" width="1" height="1"/>
+<mx:UIComponent id="video14" width="1" height="1"/>
+<mx:UIComponent id="video15" width="1" height="1"/>
+<mx:UIComponent id="video16" width="1" height="1"/>
+<mx:UIComponent id="video17" width="1" height="1"/>
+
+<!-- PAINEL DE LOGIN -->
+	<mx:Panel x="500" y= "200" id="painelLogin" width="400" height="100" layout="vertical" verticalAlign="middle" horizontalAlign="center" 
+	x.conectado="1200" y.conectado="15" 
+	width.conectado="0" height.conectado="0"
+ 	title="Login" cornerRadius="10" >
+
+		<mx:HBox id="loginForm" label="Login Form" verticalAlign="middle">
+			<mx:Label color = "#000000" text="Usuário"/>
+			<mx:TextInput id="username" width="80" borderStyle="solid" />
+			<mx:Label color = "#000000" text="Senha"/>
+			<mx:TextInput id="password" width="80" displayAsPassword="true" borderStyle="solid"
+				enter="{loginService.send()}" /> <!-- "{loginService.send()}" -->
+			<mx:Button label="Conectar" click="{loginService.send()}"/>
+		</mx:HBox>
+	</mx:Panel>
+	<mx:Canvas right="10" top="10" id="loginSuccess" label="Login Success"  visible="false">
+		<mx:HBox>	
+			<mx:Label color = "white" text="Bem-vindo(a) {username.text}, você está conectado." id="welcomeText"/>
+			<mx:Button label="Desconectar" click="{logout()}"/>		
+		</mx:HBox>
+		<mx:Label left="0" top="20" color = "white" id="status" />
+				
+	</mx:Canvas>
+
+
+
+<!-- CODIGO ORIGINAL -->
+        
+
+
+		<mx:Panel x="10" y= "400" id="tela" width="0" height="0" layout="vertical" verticalAlign="middle" horizontalAlign="center" backgroundColor="#F5F5F5" 			title="Video conferência" cornerRadius="10" 
+		x.conectado="10" y.conectado="57" 
+		width.conectado="700" height.conectado="500" color="white">
+    
+		<mx:HBox color="black">
+        		<mx:VBox>
+				<mx:Panel width="150" height="405" layout="vertical" verticalAlign="top" horizontalAlign="center" title="Usuários conectados" color = "gray">
+					<mx:VBox id="labels">
+						<mx:Label enabled="false" id="labelU0" left="100" top="12" text="Cmdo 10ª RM"	/>
+						<mx:Label enabled="false" id="labelU1" left="100" top="12" text="23º BC "	/>
+						<mx:Label enabled="false" id="labelU2" left="100" top="12" text="25º BC"	/>	
+						<mx:Label enabled="false" id="labelU3" left="100" top="12" text="40 BI"	/>
+						<mx:Label enabled="false" id="labelU4" left="100" top="12" text="10ª Cia Gd"	/>
+						<mx:Label enabled="false" id="labelU5" left="100" top="12" text="Cia Cmdo"	/>
+						<mx:Label enabled="false" id="labelU6" left="100" top="12" text="Pq Mnt/10"	/>
+						<mx:Label enabled="false" id="labelU7" left="100" top="12" text="10º D Sup"/>
+						<mx:Label enabled="false" id="labelU8" left="100" top="12" text="CMF"	/>
+						<mx:Label enabled="false" id="labelU9" left="100" top="12" text="HGeF 1"	 	/>
+						<mx:Label enabled="false" id="labelU10" left="100" top="12" text="52º CT"	/>
+						<mx:Label enabled="false" id="labelU11" left="100" top="12" text="25ª CSM"	/>
+						<mx:Label enabled="false" id="labelU12" left="100" top="12" text="26ª CSM"	/>
+						<mx:Label enabled="false" id="labelU13" left="100" top="12" text="10ª ICFEx"	/>
+						<mx:Label enabled="false" id="labelU14" left="100" top="12" text="2º BECnst"	/>
+						<mx:Label enabled="false" id="labelU15" left="100" top="12" text="3º BECnst"	/>
+						<mx:Label enabled="false" id="labelU16" left="100" top="12" text="Convidado 1"	/>
+						<mx:Label enabled="false" id="labelU17" left="100" top="12" text="Convidado 2"	/>
+					</mx:VBox>
+
+				</mx:Panel>
+			</mx:VBox>
+			<mx:VBox>
+	
+		               <mx:HBox width="330"
+	                         height="250"
+	                         backgroundColor="#000000"
+	                         left="10"
+	                         top="334">
+		                 <mx:UIComponent toolTip="Comando"
+                                 id="videoComando"
+                                 width="100%"
+                                 height="100%"
+                                 x="10"
+                                 y="353"/>
+                		</mx:HBox>
+				<mx:HBox>
+					<mx:Label id="label0" left="100" top="12" text="Cmdo 10ª RM"/>
+				</mx:HBox>
+		
+
+			<mx:HBox height="150">
+			<mx:VBox height="120">
+	            		<mx:Button id="btPublicar"
+	                       label="Publicar meu áudio/video"
+	                       click="publicar()"
+	                       left="7"
+	                       top="40"
+						   fillColors="#FF0000"
+	                       width="160" enabled="{statusConnection}"/>
+        		</mx:VBox>
+			
+			<mx:VBox>
+				<mx:HBox width="160"
+	                        	 height="120"
+	                        	 backgroundColor="#000000"
+	                        	 left="10"
+	                        	 top="334">
+		                	 <mx:UIComponent toolTip="Captura de video"
+                                    	id="videoPrincipal"
+                                    	width="100%"
+                                    	height="100%"
+                                    	x="10"
+                                    	y="353"/>
+					
+	               		</mx:HBox>
+				<mx:HBox width="160">
+					<mx:Label id="label5" left="100" top="12" text="Minha Imagem"	/>
+				</mx:HBox>
+                	</mx:VBox>
+
+						
+		</mx:HBox>
+
+    </mx:VBox>
+</mx:HBox>
+</mx:Panel>
+
+<!-- PAINEL DO CHAT -->
+<mx:Panel id = "chat" width="0" height = "0" x="1000" y="400" verticalAlign="middle" horizontalAlign="center" title="Mensagens de texto" cornerRadius="10"
+	x.conectado="720" y.conectado="57" 
+	width.conectado="250" height.conectado="500" color="white">
+<mx:HBox height="380" width="230" visible="true" color="black">
+		<mx:TextArea 
+		    id="txtChatBox"
+		    styleName="chatBox"
+		    editable="false"
+		    updateComplete="txtChatBox.verticalScrollPosition = txtChatBox.maxVerticalScrollPosition + 1;"
+		    width="100%" height="100%"/>
+</mx:HBox>
+
+<mx:Panel width="230" height = "66" layout="horizontal" verticalAlign="middle" horizontalAlign="center" title="Mensagem:" color="black">
+<mx:TextInput id="mensagem" width="140" text="" enter="envia_mensagem( mensagem.text )"/>
+        <mx:Button label="Enviar" click="envia_mensagem( mensagem.text )"/>
+</mx:Panel>
+</mx:Panel>
+
+</mx:Application>

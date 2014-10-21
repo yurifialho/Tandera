@@ -31,7 +31,8 @@
 
       <!-- CAMINHO DAS FONTES DO PROGRAMA -->
       <source-path>
-         <path-element>./src/</path-element>
+         <path-element>/Users/yurifialho/Dropbox/PROJETOS/EXERCITO/VIDEOCONFERENCIA/vconf2
+		/src/</path-element>
       </source-path>
       
      <!-- Allow the source-path to have path-elements which contain other path-elements -->
@@ -142,9 +143,9 @@
       <!-- List of CSS or SWC files to apply as a theme. -->
       <theme>
          <!-- The Flex 4 default theme is Spark. -->
-         <!--<filename>${flexlib}/themes/Spark/spark.css</filename>--> 
-	 <filename>${flexlib}/themes/Halo/halo.swc</filename> 
+         <!-- <filename>${flexlib}/themes/Spark/spark.css</filename> -->
 
+	<filename>${flexlib}/themes/Halo/halo.swc</filename>
       </theme>
 
       <!-- Turns on the display of stack traces for uncaught runtime errors. -->
