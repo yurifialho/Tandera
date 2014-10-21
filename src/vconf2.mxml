@@ -39,7 +39,7 @@ backgroundGradientColors="[#000000,#556B2F]" layout="absolute">
 	<!-- LOGIN -->
 
 <fx:Declarations>
-	<mx:HTTPService id="loginService" url="http://10.100.52.43/vconf/login.php" method="POST" resultFormat="text" 
+	<mx:HTTPService id="loginService" url="http://10.100.9.250/vconf/login.php" method="POST" resultFormat="text" 
 		result="{handleLogin(event)}" fault="{handleFault(event)}">
 		<mx:request>
 			<username>{username.text}</username>
@@ -48,7 +48,7 @@ backgroundGradientColors="[#000000,#556B2F]" layout="absolute">
 	</mx:HTTPService>
 
 	<!-- LOGOUT -->	
-	<mx:HTTPService id="logoutService" url="http://10.100.52.43/vconf/logout.php" resultFormat="text" 
+	<mx:HTTPService id="logoutService" url="http://10.100.9.250/vconf/logout.php" resultFormat="text" 
 		result="{handleLogout(event)}" fault="{handleFault(event)}"/>
 
 </fx:Declarations>
@@ -160,14 +160,14 @@ backgroundGradientColors="[#000000,#556B2F]" layout="absolute">
              backgroundColor="#000000"
              left="10"
              top="334">
-		<mx:UIComponent toolTip="10CIAGD" id="video4" width="100%" height="100%" x="10" y="353"/>
+		<mx:UIComponent toolTip="2 BEC" id="video4" width="100%" height="100%" x="10" y="353"/>
 	</mx:HBox>
 	<mx:HBox width="160"
              height="120"
              backgroundColor="#000000"
              left="10"
              top="334">
-		<mx:UIComponent toolTip="CIACMDO" id="video5" width="100%" height="100%" x="10" y="353"/>
+		<mx:UIComponent toolTip="3 BEC" id="video5" width="100%" height="100%" x="10" y="353"/>
 	</mx:HBox>
 </mx:HBox>
 <mx:HBox>
@@ -181,10 +181,12 @@ backgroundGradientColors="[#000000,#556B2F]" layout="absolute">
 			<mx:Label id="label3" left="100" top="12" text="40º BI"	/>
 	</mx:VBox>
 	<mx:VBox width="160">
-			<mx:Label id="label4" left="100" top="12" text="10ª CIA GD"	/>
+		<!--	<mx:Label id="label4" left="100" top="12" text="10ª CIA GD"	/> -->
+		<mx:Label id="label4" left="100" top="12" text="2º BEC"	/>
 	</mx:VBox>
 	<mx:VBox width="160">
-			<mx:Label id="label5" left="100" top="12" text="CIA CMDO"	/>
+		<!--	<mx:Label id="label5" left="100" top="12" text="CIA CMDO"	/> -->
+		<mx:Label id="label5" left="100" top="12" text="3º BEC"	/>
 	</mx:VBox>
 </mx:HBox>
 <mx:HBox>	
@@ -268,14 +270,14 @@ backgroundGradientColors="[#000000,#556B2F]" layout="absolute">
              backgroundColor="#000000"
              left="10"
              top="334">
-		<mx:UIComponent toolTip="2º BEC" id="video14" width="100%" height="100%" x="10" y="353"/>
+		<mx:UIComponent toolTip="10 CIA GD" id="video14" width="100%" height="100%" x="10" y="353"/>
 	</mx:HBox>
 	<mx:HBox width="160"
              height="120"
              backgroundColor="#000000"
              left="10"
              top="334">
-		<mx:UIComponent toolTip="3º BEC" id="video15" width="100%" height="100%" x="10" y="353"/>
+		<mx:UIComponent toolTip="CIA CMDO" id="video15" width="100%" height="100%" x="10" y="353"/>
 	</mx:HBox>
 </mx:HBox>
 <mx:HBox>
@@ -289,10 +291,12 @@ backgroundGradientColors="[#000000,#556B2F]" layout="absolute">
 			<mx:Label id="label13" left="100" top="12" text="10ª ICFEX"	/>
 	</mx:VBox>
 	<mx:VBox width="160">
-			<mx:Label id="label14" left="100" top="12" text="2º BEC"	/>
+		<!--	<mx:Label id="label14" left="100" top="12" text="2º BEC"	/> -->
+		<mx:Label id="label14" left="100" top="12" text="10ª CIA GD"	/>
 	</mx:VBox>
 	<mx:VBox width="160">
-			<mx:Label id="label15" left="100" top="12" text="3º BEC"	/>
+		<!--	<mx:Label id="label15" left="100" top="12" text="3º BEC"	/> -->
+		<mx:Label id="label15" left="100" top="12" text="CIA CMDO"	/>
 	</mx:VBox>
 </mx:HBox>
 </mx:VBox>

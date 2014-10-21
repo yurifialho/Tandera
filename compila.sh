@@ -1,3 +1,3 @@
 #!/bin/bash
-mxmlc -load-config flex-config.xml ./src/vconf2.mxml -output ./bin/vconf2.swf
-
+export PATH=$PATH:/home/tenfialho/Desenvolvimento/VIDEOCONFERENCIA/Arquivo_vconf/flex_sdk_4.1/bin/
+mxmlc -load-config flex-config.xml ./src/vconf2.mxml -output ./bin/modulo_CMDO2.swf

@@ -55,7 +55,7 @@ import flash.net.SharedObject;
 	        	nc.addEventListener( NetStatusEvent.NET_STATUS, netStatus );
 					}
 					//Endereço do servidor 
-	        nc.connect( "rtmp://10.100.52.43/fitcDemo" );
+	        nc.connect( "rtmp://10.100.9.250/fitcDemo" );
 	        nc.client=this;
 				}
 				catch(error:Error)
@@ -111,13 +111,16 @@ import flash.net.SharedObject;
 
 			mic=Microphone.getMicrophone();
 			mic.codec="SPEEX";            //Codec para voz padrão voip (nao é bom para radio on-line)
-			mic.encodeQuality=4;
-			mic.framesPerPacket=1;
+			mic.encodeQuality=2;
+			mic.framesPerPacket=3;
+			mic.setSilenceLevel(0);
+			mic.setUseEchoSuppression(true);
 		
 			cam=Camera.getCamera();
-			cam.setLoopback(false);
+			cam.setLoopback(true);
 			cam.setMotionLevel(70);
-			cam.setQuality(8192,0);		//64 Kbps, compactacao livre dentro da banda disp.
+			cam.setQuality(4192,1);		//64 Kbps, compactacao livre dentro da banda disp.
+			
 
 			if (username.text == "Cmdo")
 			{
@@ -219,6 +222,7 @@ import flash.net.SharedObject;
 			}
 			delete vid[id];
 			vid[id] = new Video();
+			vid[id].clear();
 			vid[id].height = video.height;
 			vid[id].width  = video.width;
 			vid[id].attachNetStream(nsCli[id]);
