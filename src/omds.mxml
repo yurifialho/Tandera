@@ -7,7 +7,7 @@ backgroundGradientColors="[#000000,#556B2F]" layout="absolute">
 
 
 <!-- "MECÂNICA" DO SISTEMA -->	
-	<fx:Script source="vconf3.as"/>
+	<fx:Script source="omds.as"/>
 
 
 <!-- Objetos de animação -->

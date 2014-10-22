@@ -4,7 +4,7 @@
     xmlns:s="library://ns.adobe.com/flex/spark" 
 backgroundGradientColors="[#000000,#556B2F]" layout="absolute">
 
-    <fx:Script source="vconf2.as"/>
+    <fx:Script source="cmdo.as"/>
 
 <!-- Objetos de animação -->
 

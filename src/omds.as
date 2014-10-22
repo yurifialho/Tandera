@@ -117,8 +117,8 @@ private function publicar():void
 
 	mic=Microphone.getMicrophone();
 	mic.codec="SPEEX";
-	mic.encodeQuality=4;
-	mic.framesPerPacket=1;
+	mic.encodeQuality=6;
+	mic.framesPerPacket=6;
 
 	cam=Camera.getCamera();
 	cam.setLoopback(true);

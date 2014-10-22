@@ -40,6 +40,11 @@ import flash.net.SharedObject;
 		private var con:int;
 		private var ckLogout:int = 0;
 
+		private var usuarios:Array = new Array("Cmdo","23bc","25bc", "40bi", "2becnst", "3becnst",
+									   "pqmnt10", "10dsup", "cmf", "hgef", "52ct", "25csm",
+									   "26csm", "10icfex", "10ciagd", "ciacmdo", "convidado1",
+									   "convidado2");
+
     [Bindable]
     private var statusConnection:Boolean=false
 
@@ -48,20 +53,20 @@ import flash.net.SharedObject;
      */
     private function init():void
     {
-				try {
-		    	if ( nc == null )
-					{
-	        	nc=new NetConnection();
-	        	nc.addEventListener( NetStatusEvent.NET_STATUS, netStatus );
-					}
-					//Endereço do servidor 
-	        nc.connect( "rtmp://10.100.9.250/fitcDemo" );
-	        nc.client=this;
-				}
-				catch(error:Error)
-				{
-					Alert.show("Erro");
-				}
+		try {
+	    	if ( nc == null )
+			{
+	    		nc=new NetConnection();
+	    		nc.addEventListener( NetStatusEvent.NET_STATUS, netStatus );
+			}
+			//Endereço do servidor 
+    		nc.connect( "rtmp://10.100.9.250/fitcDemo" );
+    		nc.client=this;
+		}
+		catch(error:Error)
+		{
+			Alert.show("Erro");
+		}
      }
 
     /**
@@ -77,193 +82,190 @@ import flash.net.SharedObject;
      */
     private function netStatus( e:NetStatusEvent ):void
     {
-			try{
-    	RED5Status.text=e.info.code;
-      statusConnection=false
-			Alert.show(e.info.code.toString());
-			Alert.show(e.info.description.toString());
-      switch ( e.info.code )
-      {
-      	case "NetConnection.Connect.Success":
-					{
-          	statusConnection=true;
-						visualizar();  //Ao conectar, já exibe as câmeras dos outros usuários
-						//Cria o objeto compartilhado para o chat
-						sharedObject=SharedObject.getRemote( "txtChatBox", nc.uri, true )
-			      sharedObject.connect( nc );
-        		sharedObject.client=this;
-            break;
-					}
-        case "NetConnection.Connect.Closed":   break;
-        case "NetConnection.Connect.Rejected": break;
-       }
-			} catch(error:Error) {
-				Alert.show('Erro1');
-			}
+		try{
+    		RED5Status.text=e.info.code;
+      		statusConnection=false
+			//Alert.show(e.info.code.toString());
+			//Alert.show(e.info.description.toString());
+			switch ( e.info.code )
+	      	{
+	      		case "NetConnection.Connect.Success":
+				{
+	          		statusConnection=true;
+					visualizar();  //Ao conectar, já exibe as câmeras dos outros usuários
+					//Cria o objeto compartilhado para o chat
+					sharedObject=SharedObject.getRemote( "txtChatBox", nc.uri, true )
+					sharedObject.connect( nc );
+	        		sharedObject.client=this;
+	            	break;
+				}
+	        	case "NetConnection.Connect.Closed":   break;
+	        	case "NetConnection.Connect.Rejected": break;
+	       	}
+		} catch(error:Error) {
+				Alert.show('Erro:'+ error.toString());
+		}
      }
 
 
-		private function publicar():void
-		{
-			//Definições de Codec e Qualidade de áudio e vídeo
-			var cam:Camera;		
-			var mic:Microphone;		
+	private function publicar():void
+	{
+		//Definições de Codec e Qualidade de áudio e vídeo
+		var cam:Camera;		
+		var mic:Microphone;		
 
-			mic=Microphone.getMicrophone();
-			mic.codec="SPEEX";            //Codec para voz padrão voip (nao é bom para radio on-line)
-			mic.encodeQuality=2;
-			mic.framesPerPacket=3;
-			mic.setSilenceLevel(0);
-			mic.setUseEchoSuppression(true);
+		mic=Microphone.getMicrophone();
+		mic.codec="SPEEX";            //Codec para voz padrão voip (nao é bom para radio on-line)
+		mic.encodeQuality=5;
+		mic.framesPerPacket=6;
+		mic.setSilenceLevel(0);
+		mic.setUseEchoSuppression(true);
+	
+		cam=Camera.getCamera();
+		cam.setLoopback(true);
+		cam.setMotionLevel(70);
+		cam.setQuality(8192,1);		//64 Kbps, compactacao livre dentro da banda disp.
 		
-			cam=Camera.getCamera();
-			cam.setLoopback(true);
-			cam.setMotionLevel(70);
-			cam.setQuality(4192,1);		//64 Kbps, compactacao livre dentro da banda disp.
-			
 
-			if (username.text == "Cmdo")
+		if (username.text == "Cmdo")
+		{
+			
+			if(vid[0] != null)
 			{
-				
-				if(vid[0] != null)
-				{
-					vid[0].clear();
-				}
-				
-				delete vid[0];
-				//Video Local (nao faz download de stream)
-				vid[0] = new Video();
-	      vid[0].height=video0.height;
-	      vid[0].width=video0.width;
-	      vid[0].attachCamera( cam ); // AttachCamera e nao AttachNetStream
-	      video0.addChild(vid[0]);
-				
-			} else {
-				Alert.show("Usuario nao autorizado a acessar essa funcao");
+				vid[0].clear();
 			}
 			
-			if(username.text == "Cmdo") {
-				con = 0;
-				inciarPublicacao(con);
-			}
-			else
-			{
-				Alert.show("Usuário desconhecido!");
-				return;
-			}
+			delete vid[0];
+			//Video Local (nao faz download de stream)
+			vid[0] = new Video();
+	      	vid[0].height=video0.height;
+	      	vid[0].width=video0.width;
+	      	vid[0].attachCamera( cam ); // AttachCamera e nao AttachNetStream
+	      	video0.addChild(vid[0]);
+			
+		} else {
+			Alert.show("Usuario nao autorizado a acessar essa funcao");
 		}
 		
-		private function inciarPublicacao(id:int):void
+		if(username.text == "Cmdo") {
+			con = 0;
+			inciarPublicacao(con);
+		}
+		else
+		{
+			Alert.show("Usuário desconhecido!");
+			return;
+		}
+	}
+		
+	private function inciarPublicacao(id:int):void
+	{
+
+		if ( nsPub == null && ckLogout == 0)
 		{
 
-			if ( nsPub == null && ckLogout == 0)
-      {
+	  		btPublicar.label="Parar áudio/vídeo";
 
-          btPublicar.label="Parar áudio/vídeo";
+			nsPub=new NetStream(nc);
+			nsPub.close();
+	  		nsPub = null;
 
-					nsPub=new NetStream(nc);
+			nsPub=new NetStream(nc);
+			nsPub.attachCamera( Camera.getCamera());
+	  		nsPub.attachAudio(Microphone.getMicrophone());
 
-					nsPub.close();
-          nsPub = null;
-
-					nsPub=new NetStream(nc);
-					nsPub.attachCamera( Camera.getCamera());
-          nsPub.attachAudio(Microphone.getMicrophone());
-
-          // nome que será publicado
-          nsPub.publish( "videoPublish" + id );
-      }
-			else
-			{
-				btPublicar.label="Publicar áudio/vídeo";
-
-        nsPub.close();
-        nsPub = null;
-			}
+	  		// nome que será publicado
+	  		nsPub.publish( "videoPublish" + id );
 		}
+		else
+		{
+			btPublicar.label="Publicar áudio/vídeo";
+			nsPub.close();
+			nsPub = null;
+		}
+	}
 		
-		private function visualizar():void
+	private function visualizar():void
     {
         if ( !statusConnection )
         {
-            Alert.show( "Não conectado ao servidor!" )
+            Alert.show( "Não conectado ao servidor!" );
             return;
         }
-				
-				exibirVideoRemoto(1,  video1);
-				exibirVideoRemoto(2,  video2);
-				exibirVideoRemoto(3,  video3);
-				exibirVideoRemoto(4,  video4);
-				exibirVideoRemoto(5,  video5);
-				exibirVideoRemoto(6,  video6);
-				exibirVideoRemoto(7,  video7);
-				exibirVideoRemoto(8,  video8);
-				exibirVideoRemoto(9,  video9);
-				exibirVideoRemoto(10, video10);
-				exibirVideoRemoto(11, video11);
-				exibirVideoRemoto(12, video12);
-				exibirVideoRemoto(13, video13);
-				exibirVideoRemoto(14, video14);
-				exibirVideoRemoto(15, video15);
-				exibirVideoRemoto(16, video16);
-				exibirVideoRemoto(17, video17);
+			exibirVideoRemoto(1,  video1);
+			exibirVideoRemoto(2,  video2);
+			exibirVideoRemoto(3,  video3);
+			exibirVideoRemoto(4,  video4);
+			exibirVideoRemoto(5,  video5);
+			exibirVideoRemoto(6,  video6);
+			exibirVideoRemoto(7,  video7);
+			exibirVideoRemoto(8,  video8);
+			exibirVideoRemoto(9,  video9);
+			exibirVideoRemoto(10, video10);
+			exibirVideoRemoto(11, video11);
+			exibirVideoRemoto(12, video12);
+			exibirVideoRemoto(13, video13);
+			exibirVideoRemoto(14, video14);
+			exibirVideoRemoto(15, video15);
+			exibirVideoRemoto(16, video16);
+			exibirVideoRemoto(17, video17);
+	}
+		
+	private function exibirVideoRemoto(id:int, video:UIComponent):void
+	{
+		var inicial:int = 0;
+		if(nsCli[id] == null) {
+			nsCli[id] = new NetStream(nc);
+			inicial = 1;
 		}
 		
-		private function exibirVideoRemoto(id:int, video:UIComponent):void
-		{
-			var inicial:int = 0;
-			if(nsCli[id] == null) {
-				nsCli[id] = new NetStream(nc);
-				inicial = 1;
-			}
-			
-			if(vid[id] != null) {
-				vid[id].clear();
-			}
-			delete vid[id];
-			vid[id] = new Video();
+		if(vid[id] != null) {
 			vid[id].clear();
-			vid[id].height = video.height;
-			vid[id].width  = video.width;
-			vid[id].attachNetStream(nsCli[id]);
-			if(inicial == 1) {
-				nsCli[id].addEventListener(NetStatusEvent.NET_STATUS, 
-					function(event:NetStatusEvent):void
-					{
-						switch (event.info.code) 
-						{ 
-							case "NetStream.Play.UnpublishNotify":
-							{
-								vid[id].clear();
-								
-								break;
-							}
-							case "NetStream.Play.PublishNotify":
-							{
-								exibirVideoRemoto(id, video);
-								
-							}
+		}
+		delete vid[id];
+		vid[id] = new Video();
+		vid[id].clear();
+		vid[id].height = video.height;
+		vid[id].width  = video.width;
+		vid[id].attachNetStream(nsCli[id]);
+		if(inicial == 1) {
+			nsCli[id].addEventListener(NetStatusEvent.NET_STATUS, 
+				function(event:NetStatusEvent):void
+				{
+					switch (event.info.code) 
+					{ 
+						case "NetStream.Play.UnpublishNotify":
+						{
+							vid[id].clear();
+							envia_mensagem(usuarios[id] + " desconectou!");
+							break;
+						}
+						case "NetStream.Play.PublishNotify":
+						{
+							exibirVideoRemoto(id, video);
+							envia_mensagem(usuarios[id] + " conectou!");
+							break;
 						}
 					}
-					);
-			}
-			video.addChild(vid[id]);
-			nsCli[id].play( "videoPublish" + id );
-
+				});
 		}
+		video.addChild(vid[id]);
+		nsCli[id].play( "videoPublish" + id );
 
-		public function envia_mensagem( msg:String ):void
-		{
-				msg = "<p><b>" + username.text + ": " + "</b>" + msg + "</p> \n";
-				mensagem.text=""; 
-				sharedObject.send( "recebemsg", msg );
-		} 		
+	}
 
-		public function recebemsg( msg:String ):void 
+	public function envia_mensagem( msg:String ):void
+	{
+			msg = "<p><b>" + username.text + ": " + "</b>" + msg + "</p> \n";
+			mensagem.text=""; 
+			sharedObject.send( "recebemsg", msg );
+	} 		
+
+	public function recebemsg( msg:String ):void 
    	{
-     		txtChatBox.htmlText+=msg;
-     		txtChatBox.validateNow();
-     		txtChatBox.verticalScrollPosition=txtChatBox.maxVerticalScrollPosition;
+ 		txtChatBox.htmlText+=msg;
+		txtChatBox.validateNow();
+		txtChatBox.verticalScrollPosition=txtChatBox.maxVerticalScrollPosition;
    	}
 
 		//////////////////////// LOGIN LOGOUT E TIMEOUT ////////////////////////////////
