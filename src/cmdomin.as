@@ -213,23 +213,23 @@ import flash.net.SharedObject;
             Alert.show( "Não conectado ao servidor!" );
             return;
         }
-			exibirVideoRemoto(1,  video1);
+			//exibirVideoRemoto(1,  video1);
 			exibirVideoRemoto(2,  video2);
 			exibirVideoRemoto(3,  video3);
 			exibirVideoRemoto(4,  video4);
 			exibirVideoRemoto(5,  video5);
-			exibirVideoRemoto(6,  video6);
-			exibirVideoRemoto(7,  video7);
-			exibirVideoRemoto(8,  video8);
-			exibirVideoRemoto(9,  video9);
-			exibirVideoRemoto(10, video10);
-			exibirVideoRemoto(11, video11);
-			exibirVideoRemoto(12, video12);
-			exibirVideoRemoto(13, video13);
-			exibirVideoRemoto(14, video14);
-			exibirVideoRemoto(15, video15);
+			//exibirVideoRemoto(6,  video6);
+			//exibirVideoRemoto(7,  video7);
+			//exibirVideoRemoto(8,  video8);
+			//exibirVideoRemoto(9,  video9);
+			//exibirVideoRemoto(10, video10);
+			//exibirVideoRemoto(11, video11);
+			//exibirVideoRemoto(12, video12);
+			//exibirVideoRemoto(13, video13);
+			//exibirVideoRemoto(14, video14);
+			//exibirVideoRemoto(15, video15);
 			exibirVideoRemoto(16, video16);
-			exibirVideoRemoto(17, video17);
+			//exibirVideoRemoto(17, video17);
 	}
 		
 	private function exibirVideoRemoto(id:int, video:UIComponent):void
